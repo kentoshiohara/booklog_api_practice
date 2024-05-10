@@ -1,11 +1,12 @@
 const express = require('express')
 const app = express()
 const port = 3000
+let booklog = {}
 
 app.use(express.json())
 
 app.post('/booklog', (req, res) => {
-    const booklog = req.body
+    booklog = req.body
 
     if (!(booklog.name && booklog.text)) {
         return res.json({
@@ -19,6 +20,15 @@ app.post('/booklog', (req, res) => {
         "booklog" : booklog
     })
 
+})
+
+app.get("/booklog", (req, res) => {
+    res.json({
+        "ok": true,
+        "booklog": [
+            booklog
+        ]
+    })
 })
 
 app.listen(port, () => {
